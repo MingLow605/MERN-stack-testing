@@ -1,4 +1,4 @@
-import User from '../models/user';
+import User from '../models/user'; //eslint-disable-line
 import Timer from '../models/timer';
 
 const ObjectId = require('mongoose').Types.ObjectId;
@@ -12,7 +12,7 @@ const create = (req, res) => {
     res.status(405).json({ status: 'failed', message: 'Missing Parameter' });
   }
 
-  const timerRecord = new Timer({ user: userId, timeTrack: timeTrack, distance: distance });
+  const timerRecord = new Timer({ user: userId, timeTrack, distance });
   timerRecord.save()
   .then(() => {
     res.json({ status: 'success' });

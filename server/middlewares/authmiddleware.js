@@ -5,22 +5,22 @@ const checkAuth = (req, res, next) => {
 
   if (bearerHeader) {
     const bearer = bearerHeader.split(' ');
-    if (bearer[0] == 'Bearer') {
+    if (bearer[0] === 'Bearer') {
       const token = bearer[1];
-      jwt.verify(token, 'ilovetoptaltest', (err, decoded) => {
+      return jwt.verify(token, 'ilovetoptaltest', (err, decoded) => {
         if (err) {
-          return res.status(401).send({message: 'Authorization failed'});
-        } else {
-          req.user = decoded;
-          next();
+          return res.status(401).send({ message: 'Authorization failed' });
         }
+
+        req.user = decoded; // eslint-disable-line no-param-reassign
+        return next();
       });
-    } else {
-      return res.status(401).send({ message: 'Authorization failed' });
     }
-  } else {
+
     return res.status(401).send({ message: 'Authorization failed' });
   }
+
+  return res.status(401).send({ message: 'Authorization failed' });
 };
 
 module.exports = {

@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('./user').userSchema;
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 const timerSchema = new Schema({
 
