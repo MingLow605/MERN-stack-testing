@@ -11,7 +11,6 @@ const checkAuth = (req, res, next) => {
         if (err) {
           return res.status(401).send({ message: 'Authorization failed' });
         }
-
         req.user = decoded; // eslint-disable-line no-param-reassign
         return next();
       });

@@ -5,11 +5,11 @@ const timerSchema = new Schema({
 
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   timeTrack: Number,
-  distance: Number
+  distance: Number,
 }, {
-  timestamps: true
+  timestamps: true,
 }, {
-  collection: 'timers'
+  collection: 'timers',
 });
 
 module.exports = mongoose.model('Timer', timerSchema);
