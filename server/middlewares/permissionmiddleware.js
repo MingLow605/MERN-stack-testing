@@ -32,8 +32,31 @@ const checkRegularUser = (req, res, next) => {
     } else res.status(401).send('Permission Error');
   });
 };
+
+const checkAdminWithManager = (req, res, next) => {
+  const userId = new ObjectId(req.user._id);
+  User.findOne({ _id: userId })
+  .then((user) => {
+    if (user.role === Permission.ADMIN || user.role === Permission.MANAGE) {
+      next();
+    } else res.status(401).send('Permission Error');
+  });
+};
+
+const checkAdminWithUser = (req, res, next) => {
+  const userId = new ObjectId(req.user._id);
+  User.findOne({ _id: userId })
+  .then((user) => {
+    if (user.role === Permission.ADMIN || user.role === Permission.USER) {
+      next();
+    } else res.status(401).send('Permission Error');
+  });
+};
+
 module.exports = {
   checkAdmin,
   checkManager,
   checkRegularUser,
+  checkAdminWithManager,
+  checkAdminWithUser,
 };

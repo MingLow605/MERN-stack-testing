@@ -1,4 +1,5 @@
 import User from '../models/user';
+import Timer from '../models/timer';
 import bcrypt from 'bcrypt';
 import permission from '../contants/permissions';
 import jwt from 'jsonwebtoken';
@@ -160,9 +161,27 @@ const getUsers = (req, res) => {
   });
 };
 
+const deleteUser = (req, res) => {
+  const deleteUserId = new ObjectId(req.params.id);
+  if (!deleteUserId) res.status(405).send('Missing Paramerter');
+  User.findOne({ _id: deleteUserId })
+  .then((user) => {
+    if (!user) throw new Error('Not find deleteUser');
+    Timer.remove({ user: deleteUser }).exec();
+    return user;
+  })
+  .then((user) => {
+    user.remove();
+  })
+  .catch((err) => {
+    res.status(400).send(err);
+  });
+};
+
 module.exports = {
   signup,
   login,
   editUser,
   getUsers,
+  deleteUser,
 };
