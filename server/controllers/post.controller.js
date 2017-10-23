@@ -9,14 +9,14 @@ import sanitizeHtml from 'sanitize-html';
  * @param res
  * @returns void
  */
-export function getPosts(req, res) {
+const getPosts = (req, res) => {
   Post.find().sort('-dateAdded').exec((err, posts) => {
     if (err) {
       res.status(500).send(err);
     }
     res.json({ posts });
   });
-}
+};
 
 /**
  * Save a post
@@ -24,7 +24,7 @@ export function getPosts(req, res) {
  * @param res
  * @returns void
  */
-export function addPost(req, res) {
+const addPost = (req, res) => {
   if (!req.body.post.name || !req.body.post.title || !req.body.post.content) {
     res.status(403).end();
   }
@@ -44,7 +44,7 @@ export function addPost(req, res) {
     }
     res.json({ post: saved });
   });
-}
+};
 
 /**
  * Get a single post
@@ -52,14 +52,14 @@ export function addPost(req, res) {
  * @param res
  * @returns void
  */
-export function getPost(req, res) {
+const getPost = (req, res) => {
   Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
     if (err) {
       res.status(500).send(err);
     }
     res.json({ post });
   });
-}
+};
 
 /**
  * Delete a post
@@ -67,7 +67,7 @@ export function getPost(req, res) {
  * @param res
  * @returns void
  */
-export function deletePost(req, res) {
+const deletePost = (req, res) => {
   Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
     if (err) {
       res.status(500).send(err);
@@ -77,4 +77,11 @@ export function deletePost(req, res) {
       res.status(200).end();
     });
   });
-}
+};
+
+module.exports = {
+  getPosts,
+  addPost,
+  getPost,
+  deletePost,
+};
