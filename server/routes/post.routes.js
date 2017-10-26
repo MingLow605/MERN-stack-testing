@@ -1,17 +1,16 @@
-import { Router } from 'express';
-import * as PostController from '../controllers/post.controller';
-const router = new Router();
-
+import express from 'express';
+const router = express.Router(); // eslint-disable-line
+const postCtrl = require('../controllers/post.controller');
 // Get all Posts
-router.route('/posts').get(PostController.getPosts);
+router.get('/', postCtrl.getPosts);
 
 // Get one post by cuid
-router.route('/posts/:cuid').get(PostController.getPost);
+router.get('/:cuid', postCtrl.getPost);
 
 // Add a new Post
-router.route('/posts').post(PostController.addPost);
+router.post('/', postCtrl.addPost);
 
 // Delete a post by cuid
-router.route('/posts/:cuid').delete(PostController.deletePost);
+router.delete('/:cuid', postCtrl.deletePost);
 
-export default router;
+module.exports = router;
